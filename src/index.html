@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <header>HEADER</header>
+        <nav>NAV</nav>
+        <main>
+            <h1>Project</h1>
+            <div class="add-task">
+                <i>+</i>
+                <h4 class="add-task-btn">Add Task</h4>
+            </div>
+            <div class="tasks"> </div>
+        </main>
+    </div>
+    <!-- A modal dialog containing a form -->
+    <dialog id="favDialog">
+        <form method="dialog">
+            <div class="addTaskDiv">
+                <div>Add a task</div>
+                <button value="cancel" formmethod="dialog">X</button>
+            </div>
+<div class="task-info">
+
+    <input type="text" name="titleText" id="titleText" placeholder="Title">
+    <input type="text" name="descriptionText" id="descriptionText" placeholder="Description">
+    <div class="dueDateDiv">
+        <label for="dueDate">Due Date</label>
+        <input type="date" name="dueDate" id="dueDate">
+    </div>
+    <fieldset>
+        <legend>Task Priority</legend>
+        <ul>
+            <li class="priority">
+                <input type="radio" name="priority" id="priHigh" value="High">
+                <label for="priHigh">High</label>
+            </li>
+            <li>
+                <input type="radio" name="priority" id="priMedium" value="Medium">
+                <label for="priMedium">Medium</label>
+            </li>
+            <li>
+                <input type="radio" name="priority" id="priLow" value="Low">
+                <label for="priLow">Low</label>
+            </li>
+        </ul>
+    </fieldset>
+    <div class="completeDiv">
+        <label for="completeCheck">Task Completed?</label>
+        <input type="checkbox" name="completeCheck" id="completeCheck">
+    </div>
+</div>
+            <button id="confirmBtn">Add</button>
+        </form>
+    </dialog>
+
+
+</body>
+
+</html>
