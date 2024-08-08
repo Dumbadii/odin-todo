@@ -10,6 +10,11 @@ export default class TodoList {
         this.saveTasks();
     }
 
+    updateTask(index, task) {
+        this.todos[index] = task;
+        this.saveTasks();
+    }
+
     deleteTask(index) {
         this.todos.splice(index,1);
         this.saveTasks();

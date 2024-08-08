@@ -10,9 +10,10 @@ const container = document.querySelector('.tasks');
 const addTaskBtn = document.querySelector('.add-task')
 const dialog = document.querySelector('dialog')
 const taskInfo = document.querySelector('.task-info')
+const dialogTitle = document.querySelector('.dialogTitle')
 
 function displayTodoList(container) {
-container.innerHTML = list.todos.map((task, index) =>
+    container.innerHTML = list.todos.map((task, index) =>
         `
             <article ${task.done ? 'class="complete"' : ''}>
                 <div class="headline">
@@ -31,27 +32,21 @@ container.innerHTML = list.todos.map((task, index) =>
 
 displayTodoList(container);
 addTaskBtn.addEventListener('click', (event) => {
-    dialog.showModal();
-    displayTodoList(container)
+    const task = new Todo('', '', '2024-08-07', 'Low', false);
+    dialogTitle.textContent = 'Add a task';
+    editTask(-1, task)
 })
 
 function editTask(key, task) {
-    taskInfo.innerHTML = taskEditTemplate(task);
-    dialog.showModal();
-    const confirm = !dialog.oncancel;
-    return {key, task, confirm}
-}
-function editTask(key) {
-    const task = list.todos[key];
-    taskInfo.innerHTML = taskEditTemplate(task);
+    taskInfo.innerHTML = taskEditTemplate(key, task);
     dialog.showModal();
 }
 container.addEventListener('click', (event) => {
     const obj = event.target;
     if (obj.classList.contains('editBtn')) {
+        dialogTitle.textContent = 'Edit task';
         const index = obj.dataset.todoindex;
-        editTask(index);
-        displayTodoList(container)
+        editTask(index, list.todos[index]);
     }
     if (obj.classList.contains('deleteBtn')) {
         let index = obj.dataset.todoindex;
@@ -60,25 +55,35 @@ container.addEventListener('click', (event) => {
     }
 })
 
-function addToDo() {
+function updateTask() {
+    const { key, title, description, dueDate, priority, done } = getTaskData();
+    const task = new Todo(title, description, dueDate, priority, done);
+    if(key == -1)
+        list.addTask(task)
+    else
+        list.updateTask(key, task)
+}
+
+function getTaskData() {
     const priority = document.querySelector('input[name="priority"]:checked').value;
-    const title = document.querySelector('input[name="titleText"]').value;
+    const titleInput = document.querySelector('input[name="titleText"]');
+    const title = titleInput.value;
+    const key = titleInput.dataset.key;
     const description = document.querySelector('input[name="descriptionText"]').value;
     const dueDate = document.querySelector('input[name="dueDate"]').value;
     const done = document.querySelector('input[name="completeCheck"]').checked;
 
-    const todoObj = new Todo(title, description, dueDate, priority, done)
-    list.addTask(todoObj);
+    return { key, title, description, dueDate, priority, done }
 }
 
 const confirmBtn = document.querySelector('#confirmBtn')
 confirmBtn.addEventListener('click', (e) => {
-    addToDo();
+    updateTask();
     displayTodoList(container);
 })
 
-const taskEditTemplate = (task)=> `
-                <input type="text" name="titleText" id="titleText" placeholder="Title" value="${task.title}">
+const taskEditTemplate = (key, task) => `
+                <input type="text" name="titleText" data-key=${key} id="titleText" placeholder="Title" value="${task.title}">
                 <input type="text" name="descriptionText" id="descriptionText" placeholder="Description" value="${task.description}">
                 <div class="dueDateDiv">
                     <label for="dueDate">Due Date</label>
