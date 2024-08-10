@@ -122,3 +122,15 @@ form .dueDateDiv {
     display: flex;
     cursor: pointer;
 }
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 1rem;
+}
+nav ul {
+    display: flex;
+    flex-direction: column;
+    gap:2rem;
+    list-style: none;
+}
